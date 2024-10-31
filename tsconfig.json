@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "src",
+        "target": "es2021",
+        "sourceMap": true,
+        "moduleResolution": "Node",
+        "module": "CommonJS",
+        "esModuleInterop": true,
+        "baseUrl": "src",
+        "paths": {
+            "@/*": ["*"],
+            "@/tests/*": ["../tests/*"]
+        },
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        // "strictNullChecks": false,
+        // "strictFunctionTypes": false,
+        // "strictPropertyInitialization": false,
+        // "noImplicitAny": false
+    },
+    "include": [
+        "src"
+    ]
+}
