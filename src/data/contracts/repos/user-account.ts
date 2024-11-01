@@ -10,7 +10,7 @@ export namespace LoadUserAccontRepository {
     export type Result = undefined
 }
 
-export interface createFacebookAccountRepository {
+export interface CreateFacebookAccountRepository {
     createFromFacebook: (params: CreateFacebookAccountRepository.Params) => Promise<void>
 }
 
