@@ -17,6 +17,7 @@ import { LoadFacebookUserApi } from "@/data/contracts/apis";
 //     }
 // }
 describe('FacebookAuthenticationService', () => {
+    const token = 'any_token'
     let LoadFacebookUserApi: MockProxy<LoadFacebookUserApi>
     let sut: FacebookAuthenticationService
 
@@ -27,7 +28,7 @@ describe('FacebookAuthenticationService', () => {
     it('Should call LoadFacebookUserApi with correct params', async () => {
         await sut.perform({ token: 'any_token' })
 
-        expect(LoadFacebookUserApi.loadUser).toHaveBeenCalledWith({ token: 'any_token' })
+        expect(LoadFacebookUserApi.loadUser).toHaveBeenCalledWith({ token })
         expect(LoadFacebookUserApi.loadUser).toHaveBeenCalledTimes(1)
     })
 
