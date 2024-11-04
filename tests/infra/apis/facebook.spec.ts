@@ -3,10 +3,19 @@ import { mock } from "jest-mock-extended"
 
 class FacebookApi {
     private readonly basicUrl = 'https://graph.facebook.com'
-    constructor(private readonly httpClient: HttpGetClient) {}
+    constructor(
+        private readonly httpClient: HttpGetClient,
+        private readonly clientId: string,
+        private readonly clientSecret: string
+    ) { }
     async loadUser(params: LoadFacebookUserApi.Params): Promise<void> {
         await this.httpClient.get({
-            url: `${this.basicUrl}/oauth/access_token`
+            url: `${this.basicUrl}/oauth/access_token`,
+            params: {
+                client_id: this.clientId,
+                client_secret: this.clientSecret,
+                grant_type: 'client_credentials'
+            }
         })
     }
 }
@@ -18,17 +27,26 @@ interface HttpGetClient {
 namespace HttpGetClient {
     export type Params = {
         url: string;
+        params: object;
     }
 }
 
 describe('FacebookApi', () => {
-  it('Should get app token', async () => {
-    const httpClient = mock<HttpGetClient>()
-    const sut = new FacebookApi(httpClient)
+    const clientId = 'any_client_id'
+    const clientSecret = 'any_client_secret'
 
-    await sut.loadUser({ token: 'any_client_token'})
-    expect(httpClient.get).toHaveBeenCalledWith({
-        url: 'https://graph.facebook.com/oauth/access_token',
+    it('Should get app token', async () => {
+        const httpClient = mock<HttpGetClient>()
+        const sut = new FacebookApi(httpClient, clientId, clientSecret)
+
+        await sut.loadUser({ token: 'any_client_token' })
+        expect(httpClient.get).toHaveBeenCalledWith({
+            url: 'https://graph.facebook.com/oauth/access_token',
+            params: {
+                client_id: clientId,
+                client_secret: clientSecret,
+                grant_type: 'client_credentials'
+            }
+        })
     })
-  })
 })
