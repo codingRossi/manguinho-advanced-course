@@ -4,6 +4,7 @@ import { FacebookAuthenticationService } from "@/data/services";
 import { mock, MockProxy } from 'jest-mock-extended'
 import { LoadFacebookUserApi } from "@/data/contracts/apis";
 import { TokenGenerator } from "@/data/contracts/crypto";
+import { AccessToken } from "@/domain/models";
 
 // type SutTypes = {
 //     sut: FacebookAuthenticationService,
@@ -17,6 +18,7 @@ import { TokenGenerator } from "@/data/contracts/crypto";
 //         LoadFacebookUserApi
 //     }
 // }
+
 describe('FacebookAuthenticationService', () => {
     const token = 'any_token'
     let loadFacebookUserApi: MockProxy<LoadFacebookUserApi>
@@ -109,9 +111,11 @@ describe('FacebookAuthenticationService', () => {
     it('Should call TokenGenerator with correct params', async () => {
         await sut.perform({ token })
 
-        expect(crypto.generateToken).toHaveBeenCalledWith({ key: 'any_account_id'})
+        expect(crypto.generateToken).toHaveBeenCalledWith({
+             key: 'any_account_id',
+             expirationInMs: AccessToken.expirationInMs,
+            })
         expect(crypto.generateToken).toHaveBeenCalledTimes(1)
     })
-
 })
 
