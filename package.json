@@ -33,6 +33,10 @@
     "axios": "^1.7.7",
     "jsonwebtoken": "^9.0.2",
     "module-alias": "^2.2.3",
-    "rimraf": "^6.0.1"
+    "pg": "^8.13.1",
+    "pg-mem": "^3.0.3",
+    "reflect-metadata": "^0.2.2",
+    "rimraf": "^6.0.1",
+    "typeorm": "0.2.29"
   }
 }
