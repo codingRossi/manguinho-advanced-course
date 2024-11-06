@@ -16,8 +16,7 @@ const makeFakeDb = async (entities?: any[]): Promise<IMemoryDb> => {
 }
 
 describe('PgUserAccountRepository', () => {
-    describe("Load", () => {
-        let sut: PgUserAccountRepository
+    let sut: PgUserAccountRepository
         let pgUserRepo: Repository<PgUser>
         let backup: IBackup
 
@@ -35,6 +34,7 @@ describe('PgUserAccountRepository', () => {
             sut = new PgUserAccountRepository()
 
         })
+    describe("Load", () => {
         it('Should return an account id email exists', async () => {
             await pgUserRepo.save({ email: 'existing_email' })
 
