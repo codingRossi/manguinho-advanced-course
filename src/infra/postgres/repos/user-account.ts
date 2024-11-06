@@ -2,10 +2,16 @@ import { LoadUserAccontRepository, SaveFacebookAccountRepository } from "@/data/
 import { getRepository } from "typeorm"
 import { PgUser } from "@/infra/postgres/entities"
 
+type LoadParams = LoadUserAccontRepository.Params
+type LoadResult = LoadUserAccontRepository.Result
+type SaveParams = SaveFacebookAccountRepository.Params
+
+
 export class PgUserAccountRepository implements LoadUserAccontRepository {
-    async load(params: LoadUserAccontRepository.Params): Promise<LoadUserAccontRepository.Result> {
+    private readonly pgUserRepo = getRepository(PgUser)
+    async load(params: LoadParams): Promise<LoadResult> {
         const pgUserRepo = getRepository(PgUser)
-        const pgUser = await pgUserRepo.findOne({
+        const pgUser = await this.pgUserRepo.findOne({
             where: {
                 email: params.email
             },
@@ -18,16 +24,15 @@ export class PgUserAccountRepository implements LoadUserAccontRepository {
         }
     }
 
-    async saveWithFacebook (params: SaveFacebookAccountRepository.Params): Promise<void> {
-        const pgUserRepo = getRepository(PgUser)
+    async saveWithFacebook (params: SaveParams): Promise<void> {
         if (params.id === undefined ) {
-            await pgUserRepo.save({
+            await this.pgUserRepo.save({
                 email: params.email,
                 name: params.name,
                 facebookId: params.facebookId,
             }) 
         } else {
-            await pgUserRepo.update({
+            await this.pgUserRepo.update({
                 id: parseInt(params.id),
             }, {
                 name: params.name,
