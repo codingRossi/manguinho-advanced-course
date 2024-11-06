@@ -1,0 +1,1 @@
+export * from '@/infra/postgres/entities/user'
