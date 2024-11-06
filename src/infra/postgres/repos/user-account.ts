@@ -5,6 +5,7 @@ import { PgUser } from "@/infra/postgres/entities"
 type LoadParams = LoadUserAccontRepository.Params
 type LoadResult = LoadUserAccontRepository.Result
 type SaveParams = SaveFacebookAccountRepository.Params
+type SaveResult = SaveFacebookAccountRepository.Result
 
 
 export class PgUserAccountRepository implements LoadUserAccontRepository {
@@ -24,20 +25,25 @@ export class PgUserAccountRepository implements LoadUserAccontRepository {
         }
     }
 
-    async saveWithFacebook (params: SaveParams): Promise<void> {
-        if (params.id === undefined ) {
-            await this.pgUserRepo.save({
+    async saveWithFacebook(params: SaveParams): Promise<SaveResult> {
+        let id: string
+        if (params.id === undefined) {
+            const pgUser = await this.pgUserRepo.save({
                 email: params.email,
                 name: params.name,
                 facebookId: params.facebookId,
-            }) 
+            })
+            id = pgUser.id.toString()
         } else {
+            id = params.id
             await this.pgUserRepo.update({
-                id: parseInt(params.id),
+                id: parseInt(params.id)
             }, {
                 name: params.name,
                 facebookId: params.facebookId,
             })
         }
+        return { id }
+
     }
 }
