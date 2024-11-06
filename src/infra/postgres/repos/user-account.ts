@@ -8,7 +8,7 @@ type SaveParams = SaveFacebookAccountRepository.Params
 type SaveResult = SaveFacebookAccountRepository.Result
 
 
-export class PgUserAccountRepository implements LoadUserAccontRepository {
+export class PgUserAccountRepository implements LoadUserAccontRepository, SaveFacebookAccountRepository {
     private readonly pgUserRepo = getRepository(PgUser)
     async load(params: LoadParams): Promise<LoadResult> {
         const pgUserRepo = getRepository(PgUser)
