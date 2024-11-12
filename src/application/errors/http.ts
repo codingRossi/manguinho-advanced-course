@@ -1,7 +1,7 @@
 export class ServerError extends Error {
     constructor(error?: Error) {
         super('Server failed. Try again soon')
-        this.name = 'Server Error'
+        this.name = 'ServerError'
         this.stack = error?.stack
     }
 }
@@ -9,13 +9,13 @@ export class ServerError extends Error {
 export class RequiredeFieldError extends Error {
     constructor(fieldName: string) {
         super('The field token is required')
-        this.stack = "RequiredFieldError"
+        this.name = "RequiredFieldError"
     }
 }
 
 export class UnauthorizedError extends Error {
     constructor() {
         super('Unauthorized')
-        this.stack = "UnauthorizedError"
+        this.name = "UnauthorizedError"
     }
 }
